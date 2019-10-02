@@ -17,6 +17,7 @@ public class AP6_EscribirLineas {
 			for(int i = 1; i <= 10; i++) {
 				wr.write("Linea " + i + "\r\n");
 			}
+			System.out.println("Escribint linees...");
 			wr.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
