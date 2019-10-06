@@ -1,7 +1,10 @@
 package beca;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -135,9 +138,8 @@ public class Main {
 				continue;
 			}
 		}
-		
-		dos.writeChars(String.valueOf(nomCognom.length()) + nomCognom);
-		dos.writeInt(1);
+		dos.writeInt(nomCognom.length());
+		dos.writeChars(nomCognom);
 		dos.writeChar(sexe);
 		dos.writeInt(edat);
 		dos.writeInt(numSuspensos);
@@ -151,7 +153,43 @@ public class Main {
 	 * Aquest metode mostra una llista amb les dades que es troben dins el fitxer
 	 * becadades.dat
 	 */
-	public static void mostraDades() {
+	public static void mostraDades() throws IOException {
+		// Declarem les variables que utilitzarem
+		int lengthNom;
+		String nom;
+		char sexe;
+		boolean residenciaFamiliar;
+		FileInputStream fis = new FileInputStream(f);
+		DataInputStream dis = new DataInputStream(fis);
+		while(dis.available() != 0) {
+			System.out.println("\n--------------------------\n");
+			lengthNom = dis.readInt();
+			nom = "";
+			
+			for(int i = 0; i < lengthNom; i++) {
+				nom = nom + String.valueOf(dis.readChar());
+			}
+			System.out.println("Nom i cognoms: " + nom);
+			sexe = dis.readChar();
+			if (sexe == 'H') {
+				System.out.println("Sexe: Home");
+			}else {
+				System.out.println("Sexe: Dona");
+			}
+			System.out.println("Edat: " + dis.readInt());
+			System.out.println("Numero Suspensos: " + dis.readInt());
+			System.out.print("Viu a la residencia familiar? ");
+			residenciaFamiliar = dis.readBoolean();
+			if(residenciaFamiliar) {
+				System.out.println("Si");
+			}else {
+				System.out.println("No");
+			}
+			System.out.println("Ingressos unitat familiar: " + dis.readFloat());
+			System.out.println("\n--------------------------\n");
+			
+		}
+		
 	}
 
 	/*
@@ -201,7 +239,12 @@ public class Main {
 				}
 				break;
 			case 2:
-				mostraDades();
+				try {
+					mostraDades();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 3:
 				if (backupDades())
