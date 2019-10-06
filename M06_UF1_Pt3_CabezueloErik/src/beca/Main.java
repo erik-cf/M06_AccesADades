@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -44,11 +43,14 @@ public class Main {
 		boolean residenciaFamiliar = false;
 		float ingressosFamilia = 0;
 		boolean inputCorrecte = false;
+		// Els objectes que escriuran al nostre fitxer
 		FileOutputStream fos = new FileOutputStream(f, true);
 		DataOutputStream dos = new DataOutputStream(fos);
+
+		// Demanem les dades i validem que siguin correctes
 		System.out.println("Introdueix el nom i el cognom del becari:");
 		nomCognom = sc.nextLine();
-		
+
 		while (!inputCorrecte) {
 			System.out.println("Introdueix el sexe del becari:\n\t 1- Home\n\t2-Dona");
 			try {
@@ -58,8 +60,8 @@ public class Main {
 				sc.nextLine();
 				continue;
 			}
-			switch(opt) {
-			default: 
+			switch (opt) {
+			default:
 				System.out.println("Has de ficar 1 per home, o 2 per a dona");
 				break;
 			case 1:
@@ -68,42 +70,42 @@ public class Main {
 				break;
 			case 2:
 				sexe = 'M';
-				inputCorrecte = true;			
+				inputCorrecte = true;
 			}
 		}
 		inputCorrecte = false;
-		
-		while(!inputCorrecte) {
+
+		while (!inputCorrecte) {
 			System.out.println("Introdueix l'edat del becari:");
 			try {
 				edat = sc.nextInt();
-			}catch(InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println("Has de ficar un numero enter!");
 				sc.nextLine();
 				continue;
 			}
-			if(edat < 20 || edat > 60)
+			if (edat < 20 || edat > 60)
 				System.out.println("L'edat ha d'estar entre 20 i 60 anys...");
-			else 
+			else
 				inputCorrecte = true;
 		}
 		inputCorrecte = false;
-		
-		while(!inputCorrecte) {
+
+		while (!inputCorrecte) {
 			System.out.println("Introdueix el numero de suspensos del becari al curs anterior (Entre 0 i 4):");
 			try {
 				numSuspensos = sc.nextInt();
-			}catch(InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println("Has de ficar un numero enter!");
 				sc.nextLine();
 			}
-			if(numSuspensos < 0 || numSuspensos > 4)
+			if (numSuspensos < 0 || numSuspensos > 4)
 				System.out.println("El numero de suspensos ha d'estar entre 0 i 4");
 			else
 				inputCorrecte = true;
 		}
 		inputCorrecte = false;
-		
+
 		while (!inputCorrecte) {
 			System.out.println("Introdueix si actualment es viu a la residencia familiar:\n\t 1 - Si\n\t2 - No");
 			try {
@@ -113,8 +115,8 @@ public class Main {
 				sc.nextLine();
 				continue;
 			}
-			switch(opt) {
-			default: 
+			switch (opt) {
+			default:
 				System.out.println("Has de ficar 1 per SI, o 2 per NO");
 				continue;
 			case 1:
@@ -126,18 +128,25 @@ public class Main {
 			inputCorrecte = true;
 		}
 		inputCorrecte = false;
-		
-		while(!inputCorrecte) {
+
+		while (!inputCorrecte) {
 			System.out.println("Introdueix els ingressos de tota la unitat familiar del becari:");
 			try {
 				ingressosFamilia = sc.nextFloat();
 				inputCorrecte = true;
-			}catch(InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println("Has de ficar un numero!");
 				sc.nextLine();
 				continue;
 			}
 		}
+
+		// Escribim les dades al fitxer per ordre.
+		// Es important saber com les estem escribint per poder llegirles despres
+
+		// La primera dada que escriurem es el length() del nom, posat que hem de saber
+		// els bytes que hem de llegir a l'hora de mostrar-los, ja que cada nom te una
+		// llargada diferent.
 		dos.writeInt(nomCognom.length());
 		dos.writeChars(nomCognom);
 		dos.writeChar(sexe);
@@ -146,6 +155,7 @@ public class Main {
 		dos.writeBoolean(residenciaFamiliar);
 		dos.writeFloat(ingressosFamilia);
 		dos.close();
+		fos.close();
 		return true;
 	}
 
@@ -159,46 +169,66 @@ public class Main {
 		String nom;
 		char sexe;
 		boolean residenciaFamiliar;
+		// Aquests objectes ens ajudaran a llegir les dades del fitxer
 		FileInputStream fis = new FileInputStream(f);
 		DataInputStream dis = new DataInputStream(fis);
-		while(dis.available() != 0) {
+		// Mentre que hi hagi dades per llegir, fem el bucle:
+		while (dis.available() != 0) {
 			System.out.println("\n--------------------------\n");
 			lengthNom = dis.readInt();
 			nom = "";
-			
-			for(int i = 0; i < lengthNom; i++) {
+			// Per això abans hem guardat el length del nom, per saber quants bytes haurem
+			// de llegir
+			for (int i = 0; i < lengthNom; i++) {
 				nom = nom + String.valueOf(dis.readChar());
 			}
+			// Mostrem les dades
 			System.out.println("Nom i cognoms: " + nom);
 			sexe = dis.readChar();
 			if (sexe == 'H') {
 				System.out.println("Sexe: Home");
-			}else {
+			} else {
 				System.out.println("Sexe: Dona");
 			}
 			System.out.println("Edat: " + dis.readInt());
 			System.out.println("Numero Suspensos: " + dis.readInt());
 			System.out.print("Viu a la residencia familiar? ");
 			residenciaFamiliar = dis.readBoolean();
-			if(residenciaFamiliar) {
+			if (residenciaFamiliar) {
 				System.out.println("Si");
-			}else {
+			} else {
 				System.out.println("No");
 			}
 			System.out.println("Ingressos unitat familiar: " + dis.readFloat());
 			System.out.println("\n--------------------------\n");
-			
+
 		}
-		
+		fis.close();
+		dis.close();
+
 	}
 
 	/*
 	 * Aquest metode fa un backup del fitxer de dades becadades.dat a
 	 * becadadesBK.dat
 	 */
-	public static boolean backupDades() {
-		
-		return false;
+	public static boolean backupDades() throws IOException {
+		// Declarem les variables i objectes
+		File backup = new File("becadadesBK.dat");
+		FileInputStream fis = new FileInputStream(f);
+		DataInputStream dis = new DataInputStream(fis);
+		FileOutputStream fos = new FileOutputStream(backup);
+		DataOutputStream dos = new DataOutputStream(fos);
+		System.out.println("\nIniciant backup de dades a becadadesBK.dat...");
+		// Llegim el fitxer becadades.dat i l'escribim al becadadesBK.dat
+		while (dis.available() != 0) {
+			dos.writeByte(dis.readByte());
+		}
+		dis.close();
+		fis.close();
+		dos.close();
+		fos.close();
+		return true;
 	}
 
 	/*
@@ -228,17 +258,20 @@ public class Main {
 			sc.nextLine();
 			switch (opt) {
 			default:
+				// Si l'usuari fica una opcio que no és a la llista:
 				System.out.println("Aquesta opció no es troba al menú...");
 				break;
 			case 1:
 				try {
+					// Si esocgeix 1, voldra introduir dades
 					if (introduccioDades())
-						System.out.println("Introduides les dades");
+						System.out.println("Introduides les dades\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				break;
 			case 2:
+				// Si escogeix 2, voldra mostrar-les
 				try {
 					mostraDades();
 				} catch (IOException e) {
@@ -247,11 +280,19 @@ public class Main {
 				}
 				break;
 			case 3:
-				if (backupDades())
-					System.out.println("Backup de les dades fet correctament.");
+				try {
+					// Si escogeix 3, voldra fer backup de les dades
+					if (backupDades())
+						System.out.println("Backup de les dades fet correctament.\n");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 4:
+				// Si escogeix 4, voldra sortir
 				exit = true;
+				sc.close();
 				System.out.println("Fins aviat!");
 			}
 		}
