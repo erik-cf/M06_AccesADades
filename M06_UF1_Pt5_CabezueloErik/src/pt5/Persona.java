@@ -4,21 +4,22 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Persona implements Serializable {
 
-	
-
+	// Atributs de persona:
 	private String nom;
 	private int edat;
 
-	public Persona() {
-
-	}
-
+	/*
+	 * Constructor de la classe Persona
+	 */
 	public Persona(String nom, int edat) {
 		super();
 		this.nom = nom;
 		this.edat = edat;
 	}
-
+	
+	/*
+	 * Getters i setters
+	 */
 	public String getNom() {
 		return nom;
 	}
@@ -34,6 +35,14 @@ public class Persona implements Serializable {
 	public void setEdat(int edat) {
 		this.edat = edat;
 	}
+
+	/*
+	 * Metode toString
+	 */
+	public String toString() {
+		return "\nPersona amb nom " + nom + " i edat " + edat + ".\n";
+	}
+	
 
 	
 
