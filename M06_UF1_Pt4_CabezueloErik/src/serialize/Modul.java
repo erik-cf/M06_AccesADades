@@ -5,13 +5,17 @@ import java.util.ArrayList;
 
 public class Modul implements Serializable {
 	
-	private String tutor;
+	private String nom;
 	private String profe;
 	private ArrayList<String> ufs;
 	
-	public Modul(String tutor, String profe, ArrayList<String> ufs) {
+	public Modul() {
+		
+	}
+	
+	public Modul(String nom, String profe, ArrayList<String> ufs) {
 		super();
-		this.tutor = tutor;
+		this.nom = nom;
 		this.profe = profe;
 		this.ufs = ufs;
 	}
@@ -28,12 +32,12 @@ public class Modul implements Serializable {
 		
 	}
 
-	public String getTutor() {
-		return tutor;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setTutor(String tutor) {
-		this.tutor = tutor;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public String getProfe() {
