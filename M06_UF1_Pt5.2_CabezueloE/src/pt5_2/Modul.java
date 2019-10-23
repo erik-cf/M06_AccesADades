@@ -4,26 +4,6 @@ import java.util.ArrayList;
 
 public class Modul extends Curs {
 
-	/***************************************************************
-	 * Utilitzant un fitxer XML s’emmagatzemaran les dades dels cursos dels cicles
-	 * que s’imparteixen al centre.
-	 * 
-	 * Els aspectes que cal tenir en compte són els següents:
-	 * 
-	 * Respecte a un curs:
-	 * 
-	 * Un curs té un codi identificatiu. Un curs té un tutor i una llista d’alumnes.
-	 * Un curs té com a mínim un mòdul.
-	 * 
-	 * Respecte a un mòdul:
-	 * 
-	 * Un mòdul té un codi identificatiu. Un mòdul té un títol. Té un professor com
-	 * a mínim. Té una sèrie d’unitats formatives.
-	 * 
-	 * 
-	 * Cal realitzar el corresponent fitxer XML mitjançant un programa java.
-	 */
-
 	private int idModul;
 	private String titol;
 	private ArrayList<String> professors;
