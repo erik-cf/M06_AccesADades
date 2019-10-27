@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,17 +45,20 @@ public class MetodesDOM {
 		// El desem com a fill directe del document XML
 		doc.appendChild(arrel);
 
-		// Declarem variables per emmagatzemar les dades dels nodes que tindra el nostre fitxer XML
+		// Declarem variables per emmagatzemar les dades dels nodes que tindra el nostre
+		// fitxer XML
 		Element persona;
 		Element nom;
 		Element edat;
-		
+
 		// Llegim el primer objecte de myPeople.dat
 		p = (Persona) ois.readObject();
-		
-		// Mentre que l'objecte p no sigui null, llegirem el fitxer i crearem els nodes XML
+
+		// Mentre que l'objecte p no sigui null, llegirem el fitxer i crearem els nodes
+		// XML
 		while (p != null) {
-			// Creem un node persona, n'hi haura 1 per cada objecte desat al fitxer myPeople.dat
+			// Creem un node persona, n'hi haura 1 per cada objecte desat al fitxer
+			// myPeople.dat
 			persona = doc.createElement("persona");
 			// El desem com a fill de l'arrel
 			arrel.appendChild(persona);
@@ -108,7 +110,7 @@ public class MetodesDOM {
 		}
 
 	}
-	
+
 	/*
 	 * El següent mètode llegeix el fitxer XML i l'imprimeix per pantalla
 	 */
@@ -117,25 +119,27 @@ public class MetodesDOM {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(xml);
-		
+
 		// Normalitzem el document XML:
 		doc.getDocumentElement().normalize();
 
 		// Creem una llista amb els elements 'persona'
 		NodeList nList = doc.getElementsByTagName("persona");
-		
+
 		// Fem un bucle per recorrer tots els nodes 'persona'
 		for (int i = 0; i < nList.getLength(); i++) {
 			// Agafem el node amb index 'i' dins la llista
 			Node n = nList.item(i);
-			// Mostrem les dades agafant els fills del node persona i mostrant els seus fills
+			// Mostrem les dades agafant els fills del node persona i mostrant els seus
+			// fills
 			System.out.print("\nPersona trobada amb nom: " + n.getChildNodes().item(0).getTextContent());
 			System.out.println(" i edat: " + n.getChildNodes().item(1).getTextContent());
 		}
 	}
-	
+
 	/*
-	 * Aquest metode comprova que existeixi el fitxer XML, i si no el crea per evitar errors.
+	 * Aquest metode comprova que existeixi el fitxer XML, i si no el crea per
+	 * evitar errors.
 	 */
 	public static boolean comprovaFitxerXML(File xml) throws IOException {
 		if (!xml.exists()) {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><cursos>
+	<curs id="1">
+		<nom>DAM</nom>
+		<tutor>David Espeja</tutor>
+		<alumnes>
+			<alumne>Erik</alumne>
+			<alumne>Juan</alumne>
+			<alumne>Paco</alumne>
+		</alumnes>
+		<moduls>
+			<modul id="1">
+				<titol>Acces a dades</titol>
+				<professors>
+					<professor>Rafa</professor>
+					<professor>Enric</professor>
+				</professors>
+				<ufs>
+					<uf>Uf1</uf>
+					<uf>UF2</uf>
+					<uf>Uf3</uf>
+				</ufs>
+			</modul>
+			<modul id="2">
+				<titol>Grafics</titol>
+				<professors>
+					<professor>Espeja</professor>
+				</professors>
+				<ufs>
+					<uf>UF1</uf>
+					<uf>UF2</uf>
+					<uf>UF3</uf>
+				</ufs>
+			</modul>
+			
+		</moduls>
+	</curs>
+	<curs id="2">
+		<nom>DAW</nom>
+		<tutor>Leandro</tutor>
+		<alumnes>
+			<alumne>aa</alumne>
+			<alumne>bb</alumne>
+			<alumne>cc</alumne>
+			<alumne>dd</alumne>
+			<alumne>ee</alumne>
+			<alumne>ff</alumne>
+		</alumnes>
+		<moduls>
+			<modul id="1">
+				<titol>AA</titol>
+				<professors>
+					<professor>qq</professor>
+					<professor>ww</professor>
+					<professor>rr</professor>
+					<professor>tt</professor>
+				</professors>
+				<ufs>
+					<uf>UF1</uf>
+					<uf>UF2</uf>
+					<uf>UF3</uf>
+					<uf>UF4</uf>
+				</ufs>
+			</modul>
+		</moduls>
+	</curs>
+</cursos>
